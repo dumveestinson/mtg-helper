@@ -27,11 +27,15 @@ export interface ScryfallCard {
 
 // Deck archetype
 export interface Archetype {
+  id?: string; // External ID for live data (e.g. MTGTop8 ID)
   name: string;
   description: string;
   colors: string[];
   mainboard: DeckCard[];
   sideboard: DeckCard[];
+  rank?: number;
+  metaShare?: number;
+  price?: number;
 }
 
 // Card in deck with quantity

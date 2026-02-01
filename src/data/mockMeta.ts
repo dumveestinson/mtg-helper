@@ -4,6 +4,9 @@ import type { Archetype, MatchupGuide } from '../types';
 export const mockDecks: Archetype[] = [
   {
     name: 'Mono-Red Aggro',
+    rank: 1,
+    metaShare: 24.5,
+    price: 120.50,
     description: 'Fast aggressive red deck with burn spells and efficient creatures',
     colors: ['R'],
     mainboard: [
@@ -28,6 +31,9 @@ export const mockDecks: Archetype[] = [
   },
   {
     name: 'Dimir Control',
+    rank: 2,
+    metaShare: 18.2,
+    price: 340.00,
     description: 'Control deck with counterspells, removal, and card draw',
     colors: ['U', 'B'],
     mainboard: [
@@ -54,6 +60,9 @@ export const mockDecks: Archetype[] = [
   },
   {
     name: 'Selesnya Enchantments',
+    rank: 3,
+    metaShare: 12.8,
+    price: 215.75,
     description: 'Midrange deck utilizing powerful enchantments and creatures',
     colors: ['G', 'W'],
     mainboard: [

@@ -2,14 +2,17 @@ import React from 'react';
 import { mockDecks } from '../data/mockMeta';
 import { DeckList } from '../components/DeckList';
 import { MatchupGuide } from '../components/MatchupGuide';
+import type { Archetype } from '../types';
 
 interface DeckDetailPageProps {
   deckId: string;
+  deckData?: Archetype | null; // Allow passing the full deck object
   onBack: () => void;
 }
 
-export function DeckDetailPage({ deckId, onBack }: DeckDetailPageProps) {
-  const deck = mockDecks.find(d => d.name === deckId);
+export function DeckDetailPage({ deckId, deckData, onBack }: DeckDetailPageProps) {
+  // If deckData is passed (from live api), use it. Otherwise try to find in mock.
+  const deck = deckData || mockDecks.find(d => d.name === deckId);
 
   if (!deck) {
     return (
@@ -72,7 +75,28 @@ export function DeckDetailPage({ deckId, onBack }: DeckDetailPageProps) {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         <div className="lg:col-span-2">
-          <DeckList deck={deck} />
+          {deck.mainboard.length > 0 ? (
+             <DeckList deck={deck} />
+          ) : (
+             <div className="bg-slate-900/40 border border-white/5 rounded-xl p-12 text-center">
+                 <h3 className="text-white font-bold text-xl mb-4">Decklist Preview Unavailable</h3>
+                 <p className="text-slate-400 mb-8 max-w-md mx-auto">
+                    We are currently pulling live meta stats but cannot parse the full decklist dynamically yet.
+                 </p>
+                 {deck.id ? (
+                     <a 
+                        href={`https://www.mtgtop8.com/archetype?a=${deck.id}&f=ST`} 
+                        target="_blank" 
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white px-6 py-3 rounded-lg font-bold transition-colors"
+                     >
+                        View sample lists on MTGTop8 <span aria-hidden="true">&rarr;</span>
+                     </a>
+                 ) : (
+                     <p className="text-slate-500 italic">External link unavailable</p>
+                 )}
+             </div>
+          )}
         </div>
         <div className="lg:col-span-1">
             <MatchupGuide currentDeckName={deck.name} />

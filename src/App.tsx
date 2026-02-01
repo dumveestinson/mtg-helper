@@ -3,30 +3,31 @@ import { Navbar } from './components/Navbar';
 import { MetaPage } from './pages/MetaPage';
 import { DeckDetailPage } from './pages/DeckDetailPage';
 import { SearchPage } from './pages/SearchPage';
+import type { Archetype } from './types'; // Ensure this type is exported from types/index.ts
 
 type View = 'home' | 'deck' | 'search';
 
 function App() {
   const [currentView, setCurrentView] = useState<View>('home');
-  const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null);
+  const [selectedDeck, setSelectedDeck] = useState<Archetype | null>(null);
 
   const handleNavigate = (view: 'home' | 'search') => {
     setCurrentView(view);
     if (view !== 'deck') {
-        setSelectedDeckId(null);
+        setSelectedDeck(null);
     }
     window.scrollTo(0, 0);
   };
 
-  const handleDeckSelect = (deckId: string) => {
-    setSelectedDeckId(deckId);
+  const handleDeckSelect = (deck: Archetype) => {
+    setSelectedDeck(deck);
     setCurrentView('deck');
     window.scrollTo(0, 0);
   };
 
   const handleBackToHome = () => {
     setCurrentView('home');
-    setSelectedDeckId(null);
+    setSelectedDeck(null);
     window.scrollTo(0, 0);
   };
 
@@ -39,9 +40,10 @@ function App() {
           <MetaPage onDeckSelect={handleDeckSelect} />
         )}
         
-        {currentView === 'deck' && selectedDeckId && (
+        {currentView === 'deck' && selectedDeck && (
           <DeckDetailPage 
-            deckId={selectedDeckId} 
+            deckId={selectedDeck.name} // Backward compatibility if needed, using name as ID 
+            deckData={selectedDeck}
             onBack={handleBackToHome} 
           />
         )}
