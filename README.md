@@ -1,73 +1,61 @@
-# React + TypeScript + Vite
+# MTG Helper - Standard Rotation Sideboarder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A sideboard helper tool for Magic: The Gathering Standard format. This app helps players find optimal sideboard strategies for different matchups in the current Standard meta.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Deck Selection**: Choose your deck and opponent's deck from the current Standard meta
+- **Sideboard Guides**: Get detailed sideboard plans with cards to bring in and take out
+- **Matchup Strategies**: Learn key strategies for each matchup
+- **Standard Legal Cards**: Integrated with Scryfall API to enforce Standard legality
 
-## React Compiler
+## Available Decks
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Mono-Red Aggro**: Fast aggressive red deck with burn spells and efficient creatures
+- **Dimir Control**: Control deck with counterspells, removal, and card draw
+- **Selesnya Enchantments**: Midrange deck utilizing powerful enchantments and creatures
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Tailwind CSS** - Styling
+- **Scryfall API** - Card data and legality checking
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Development
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```bash
+# Install dependencies
+npm install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Project Structure
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+src/
+├── components/     # React components
+├── services/       # API services (Scryfall)
+├── types/          # TypeScript type definitions
+├── data/           # Mock meta data and deck lists
+├── App.tsx         # Main application component
+└── main.tsx        # Application entry point
+```
+
+## API Integration
+
+The app uses the Scryfall API to:
+- Search for cards by name
+- Verify Standard legality
+- Fetch card data and images
+
+All API calls automatically filter for `legal:standard` to ensure only Standard-legal cards are used.
